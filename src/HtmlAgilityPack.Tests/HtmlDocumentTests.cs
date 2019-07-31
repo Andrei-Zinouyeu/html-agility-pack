@@ -124,6 +124,7 @@ namespace HtmlAgilityPack.Tests
 				var docPath = Get_html5_utf8_DocumentPath();
 
 				var doc = new HtmlDocument();
+                doc.UseHtmlEncodingForStream = true;
                 Encoding enc = null;
                 using (StreamReader sr = new StreamReader(docPath))
                 {
@@ -149,6 +150,7 @@ namespace HtmlAgilityPack.Tests
 		{
 			var docPath = Get_html5_w_1251_DocumentPath();
 			var doc = new HtmlDocument();
+            doc.UseHtmlEncodingForStream = true;
             Encoding enc = null;
             using (StreamReader sr = new StreamReader(docPath))
             {

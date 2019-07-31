@@ -84,7 +84,6 @@ namespace HtmlAgilityPack
         private int _remainderOffset;
         private ParseState _state;
         private Encoding _streamencoding;
-        private bool _useHtmlEncodingForStream;
 
         /// <summary>The HtmlDocument Text. Careful if you modify it.</summary>
         public string Text;
@@ -200,12 +199,17 @@ namespace HtmlAgilityPack
 	    /// </summary>
 	    public int OptionMaxNestedChildNodes = 0;
 
+        /// <summary>
+        /// The html is checked.
+        /// </summary>
+        public bool UseHtmlEncodingForStream = false;
 
-		#endregion
 
-		#region Static Members
+        #endregion
 
-		internal static readonly string HtmlExceptionRefNotChild = "Reference node must be a child of this node";
+        #region Static Members
+
+        internal static readonly string HtmlExceptionRefNotChild = "Reference node must be a child of this node";
 
         internal static readonly string HtmlExceptionUseIdAttributeFalse = "You need to set UseIdAttribute property to true to enable this feature";
 
@@ -554,8 +558,6 @@ namespace HtmlAgilityPack
         /// <returns>The detected encoding.</returns>
         public Encoding DetectEncoding(Stream stream, bool checkHtml)
         {
-            _useHtmlEncodingForStream = checkHtml;
-
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
@@ -597,7 +599,7 @@ namespace HtmlAgilityPack
             }
 
             StreamReader sr = reader as StreamReader;
-            if (sr != null && !_useHtmlEncodingForStream)
+            if (sr != null && !UseHtmlEncodingForStream)
             {
                 Text = sr.ReadToEnd();
                 _streamencoding = sr.CurrentEncoding;
