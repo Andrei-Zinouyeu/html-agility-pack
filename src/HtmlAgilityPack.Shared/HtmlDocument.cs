@@ -2101,6 +2101,7 @@ namespace HtmlAgilityPack
                 return;
             string charset = null;
             HtmlAttribute att = node.Attributes["http-equiv"];
+            var isHtml5 = false;
             if (att != null)
             {
                 if (string.Compare(att.Value, "content-type", StringComparison.OrdinalIgnoreCase) != 0)
@@ -2113,11 +2114,21 @@ namespace HtmlAgilityPack
             {
                 att = node.Attributes["charset"];
                 if (att != null)
+                {
                     charset = att.Value;
+                    isHtml5 = true;
+                }
             }
 
             if (!string.IsNullOrEmpty(charset))
             {
+                if (isHtml5)
+                {
+                    node.Attributes.Add("http-equiv", "content-type");
+                    node.Attributes.Remove("charset");
+                    node.Attributes.Add("content", $"text/html;charset={charset}");
+                }
+
                 // The following check fixes the the bug described at: http://htmlagilitypack.codeplex.com/WorkItem/View.aspx?WorkItemId=25273
                 if (string.Equals(charset, "utf8", StringComparison.OrdinalIgnoreCase))
                     charset = "utf-8";
