@@ -128,7 +128,7 @@ namespace HtmlAgilityPack.Tests
                 Encoding enc = null;
                 using (StreamReader sr = new StreamReader(docPath))
                 {
-                    enc = doc.DetectEncoding(sr.BaseStream, true);
+                    enc = doc.DetectEncoding(sr.BaseStream);
 
                 }
 
@@ -154,7 +154,7 @@ namespace HtmlAgilityPack.Tests
             Encoding enc = null;
             using (StreamReader sr = new StreamReader(docPath))
             {
-                enc = doc.DetectEncoding(sr.BaseStream, true);
+                enc = doc.DetectEncoding(sr.BaseStream);
 
             }
             Assert.AreEqual(1251, enc.CodePage);

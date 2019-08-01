@@ -540,23 +540,13 @@ namespace HtmlAgilityPack
             return t;
         }
 
+
         /// <summary>
         /// Detects the encoding of an HTML stream.
         /// </summary>
         /// <param name="stream">The input stream. May not be null.</param>
         /// <returns>The detected encoding.</returns>
         public Encoding DetectEncoding(Stream stream)
-        {
-            return DetectEncoding(stream, false);
-        }
-
-        /// <summary>
-        /// Detects the encoding of an HTML stream.
-        /// </summary>
-        /// <param name="stream">The input stream. May not be null.</param>
-        /// <param name="checkHtml">The html is checked.</param>
-        /// <returns>The detected encoding.</returns>
-        public Encoding DetectEncoding(Stream stream, bool checkHtml)
         {
             if (stream == null)
             {
@@ -2111,6 +2101,8 @@ namespace HtmlAgilityPack
                 HtmlAttribute content = node.Attributes["content"];
                 if (content != null)
                     charset = NameValuePairList.GetNameValuePairsValue(content.Value, "charset");
+                else
+                    charset = node.GetAttributeValue("charset", null);
             }
             else
             {
